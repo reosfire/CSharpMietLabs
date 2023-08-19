@@ -1,10 +1,15 @@
-﻿namespace Lab1.Models
+﻿using System.Collections;
+using Lab2.Models.Student;
+
+namespace Lab2.Models
 {
     internal static class Mocker
     {
         public static string MockString(string prefix) => prefix + Guid.NewGuid().ToString();
         public static int MockInt() => Random.Shared.Next();
         public static int MockInt(int maxValue) => Random.Shared.Next(maxValue);
+        public static int MockInt(int minValue, int maxValue) => Random.Shared.Next(minValue, maxValue);
+        public static bool MockBool() => Random.Shared.Next(2) == 1;
         public static DateTime MockDateTime() => 
             new DateTime(Random.Shared.NextInt64(DateTime.MinValue.Ticks, DateTime.MaxValue.Ticks));
 
@@ -20,6 +25,12 @@
                 MockString("[mock subject] "),
                 MockInt(),
                 MockDateTime()
+                );
+
+        public static Test MockTest() =>
+            new Test(
+                MockString("[mock subject] "),
+                MockBool()
                 );
 
         public static Education MockEducation()
@@ -38,12 +49,24 @@
             return generated;
         }
 
-        public static Student MockStudent() =>
-            new Student(
+        public static ArrayList MockArrayListWith(Func<object> generator, int minSize = 5, int maxSize = 10)
+        {
+            int count = Random.Shared.Next(minSize, maxSize);
+            ArrayList generated = new ArrayList(count);
+            for (int i = 0; i < count; i++)
+            {
+                generated.Add(generator());
+            }
+            return generated;
+        }
+
+        public static Student.Student MockStudent() =>
+            new Student.Student(
                 MockPerson(),
                 MockEducation(),
-                MockInt(),
-                MockArrayWith(() => MockExam())
+                MockInt(101, 599),
+                MockArrayListWith(() => MockExam(), 2, 3),
+                MockArrayListWith(() => MockTest(), 2, 3)
                 );
 
 

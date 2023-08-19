@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Lab1
+namespace Lab2
 {
 	internal class BenchmarkRunner
 	{

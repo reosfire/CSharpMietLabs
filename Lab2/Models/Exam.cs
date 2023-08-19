@@ -1,6 +1,9 @@
-﻿namespace Lab1.Models
+﻿using Lab2;
+using System.Xml.Linq;
+
+namespace Lab2.Models
 {
-    internal class Exam
+    internal class Exam: IDateAndCopy
     {
         public string Subject { get; set; }
         public int Mark { get; set; }
@@ -21,5 +24,21 @@
         }
 
         public override string ToString() => $"Subject: {Subject}\nMark: {Mark}\nDate: {Date}";
+
+        public virtual object DeepCopy() => new Exam(Subject, Mark, Date);
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is null) return false;
+            if (obj is not Exam other) return false;
+            return Subject == other.Subject && Mark == other.Mark && Date == other.Date;
+        }
+        public override int GetHashCode() => HashCode.Combine(Subject, Mark, Date);
+        public static bool operator ==(Exam a, Exam b)
+        {
+            if (a is null) return b is null;
+            return a.Equals(b);
+        }
+        public static bool operator !=(Exam a, Exam b) => !(a == b);
     }
 }
