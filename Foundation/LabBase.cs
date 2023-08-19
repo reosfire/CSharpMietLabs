@@ -15,5 +15,26 @@
             action();
             Console.WriteLine();
         }
+
+        protected static T ReadUserFriendly<T>(string retryMessage, Func<string?> reader, Func<string, T> parser)
+        {
+            while (true)
+            {
+                try
+                {
+                    return parser(reader()!);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine(retryMessage);
+                }
+            }
+        }
+
+        protected static T ReadUserFriendly<T>(string retryMessage, Func<string, T> parser) =>
+            ReadUserFriendly<T>(retryMessage, Console.ReadLine, parser);
+
+        protected static int ReadInt() => ReadUserFriendly("Enter number: ", int.Parse);
+        protected static long ReadLong() => ReadUserFriendly("Enter number: ", long.Parse);
     }
 }

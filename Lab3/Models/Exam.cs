@@ -1,6 +1,6 @@
 ﻿namespace Lab3.Models
 {
-    internal class Exam: IDateAndCopy
+    internal class Exam: IDateAndCopy, IComparable<Exam>, IComparer<Exam>
     {
         public string Subject { get; set; }
         public int Mark { get; set; }
@@ -31,6 +31,21 @@
             return Subject == other.Subject && Mark == other.Mark && Date == other.Date;
         }
         public override int GetHashCode() => HashCode.Combine(Subject, Mark, Date);
+
+        public int CompareTo(Exam? other)
+        {
+            if (other is null) return -1;
+            return Subject.CompareTo(other.Subject);
+        }
+
+        public int Compare(Exam? x, Exam? y)
+        {
+            if (x is null && y is null) return 0;
+            if (x is null) return -1;
+            if (y is null) return 1;
+            return x.Mark.CompareTo(y.Mark);
+        }
+
         public static bool operator ==(Exam a, Exam b)
         {
             if (a is null) return b is null;

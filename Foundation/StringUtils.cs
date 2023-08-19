@@ -29,5 +29,8 @@ namespace Foundation
 
         public static string ToStringTabulated<T>(this IEnumerable<T> collection) where T : notnull =>
             string.Join("\n\n", collection.Select(it => "   -" + it?.ToString()?.Tabulate(2)[4..]));
+
+        public static string ToStringTabulated<K, V>(this IEnumerable<KeyValuePair<K, V>> collection) =>
+            string.Join("\n\n", collection.Select(it => "   " + it.Key + ":\n" + it.Value?.ToString()?.Tabulate(2)));
     }
 }

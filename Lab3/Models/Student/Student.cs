@@ -7,8 +7,8 @@ namespace Lab3.Models.Student
     {
         private Education _education;
         private int _group;
-        private ArrayList _exams;
-        private ArrayList _tests;
+        private List<Exam> _exams;
+        private List<Test> _tests;
 
         public Person Person
         {
@@ -34,12 +34,12 @@ namespace Lab3.Models.Student
                 _group = value;
             }
         }
-        public ArrayList Exams
+        public List<Exam> Exams
         {
             get => _exams;
             set => _exams = value;
         }
-        public ArrayList Tests
+        public List<Test> Tests
         {
             get => _tests;
             set => _tests = value;
@@ -53,8 +53,8 @@ namespace Lab3.Models.Student
             Person person,
             Education education,
             int group,
-            ArrayList exams,
-            ArrayList test
+            List<Exam> exams,
+            List<Test> test
         ) : base(person.Name, person.Surname, person.Birthday)
         {
             _education = education;
@@ -67,8 +67,8 @@ namespace Lab3.Models.Student
         {
             _education = Education.Bachelor;
             _group = 0;
-            _exams = new ArrayList();
-            _tests = new ArrayList();
+            _exams = new List<Exam>();
+            _tests = new List<Test>();
         }
 
         public void AddExams(params Exam[] exams) => _exams.AddRange(exams);
@@ -77,20 +77,23 @@ namespace Lab3.Models.Student
         public override string ToString() => base.ToString() + "\n" +
             $"Education: {Education}\n" +
             $"Group: {Group}\n" +
-            $"Exams: {(_exams.Count > 0 ? "\n" + _exams.ToArray().Cast<Exam>().ToStringTabulated() : "[ ]")}\n" +
-            $"Tests: {(_tests.Count > 0 ? "\n" + _tests.ToArray().Cast<Test>().ToStringTabulated() : "[ ]")}";
+            $"AverageMark: {AverageMark}\n" +
+            $"Exams: {(_exams.Count > 0 ? "\n" + _exams.ToStringTabulated() : "[ ]")}\n" +
+            $"Tests: {(_tests.Count > 0 ? "\n" + _tests.ToStringTabulated() : "[ ]")}";
 
         public override string ToShortString() => base.ToString() + "\n" +
             $"Education: {Education}\n" +
             $"Group: {Group}\n" +
-            $"AverageMark: {AverageMark}";
+            $"AverageMark: {AverageMark}\n" +
+            $"Exams: {Exams.Count}\n" +
+            $"Tests: {Tests.Count}\n";
 
         public new Student DeepCopy() =>
             new Student(this,
                 Education,
                 Group,
-                _exams.Cast<Exam>().Select(it => it.DeepCopy()).ToArrayList(),
-                _tests.Cast<Test>().Select(it => it.DeepCopy()).ToArrayList()
+                _exams.Select(it => (Exam)it.DeepCopy()).ToList(),
+                _tests.Select(it => (Test)it.DeepCopy()).ToList()
                 );
 
         public override bool Equals(object? obj)
@@ -100,8 +103,8 @@ namespace Lab3.Models.Student
             return base.Equals(obj) &&
                 Education == other.Education &&
                 Group == other.Group &&
-                Exams.Cast<Exam>().SequenceEqual(other.Exams.Cast<Exam>()) &&
-                Tests.Cast<Exam>().SequenceEqual(other.Tests.Cast<Exam>());
+                Exams.SequenceEqual(other.Exams) &&
+                Tests.SequenceEqual(other.Tests);
         }
         public override int GetHashCode() =>
             HashCode.Combine(base.GetHashCode(),
@@ -112,23 +115,26 @@ namespace Lab3.Models.Student
                 );
 
         public IEnumerable<object> ExamsAndTests() =>
-            Exams.Cast<object>().Concat(Tests.Cast<object>());
+            Exams.Concat<object>(Tests);
         public IEnumerable<Exam> ExamsWithGreaterMark(int bound) =>
-            Exams.Cast<Exam>().Where(it => it.Mark > bound);
+            Exams.Where(it => it.Mark > bound);
 
-        private IEnumerable<object> PassedExams() => ExamsWithGreaterMark(2);
-        private IEnumerable<object> PassedTests() =>
-            Tests.Cast<Test>().Where(it => it.Passed);
+        private IEnumerable<Exam> PassedExams() => ExamsWithGreaterMark(2);
+        private IEnumerable<Test> PassedTests() => Tests.Where(it => it.Passed);
 
         public IEnumerable<object> PassedExamsAndTests() =>
-            PassedExams().Concat(PassedTests());
+            PassedExams().Concat<object>(PassedTests());
         public IEnumerable<Test> PassedTestsWithPassedExams() =>
-            PassedTests().Cast<Test>().Where(test =>
-                PassedExams().Cast<Exam>().Any(exam => test.Subject == exam.Subject)
+            PassedTests().Where(test =>
+                PassedExams().Any(exam => test.Subject == exam.Subject)
             );
 
         public IEnumerator<string> GetEnumerator() => new StudentEnumerator(this);
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public void SortExamsBySubject() => Exams.Sort();
+        public void SortExamsByMark() => Exams.Sort(new Exam());
+        public void SortExamsByDate() => Exams.Sort(new ExamDateComparer());
 
         public static bool operator ==(Student a, Student b)
         {
