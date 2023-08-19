@@ -1,4 +1,6 @@
-﻿namespace Lab1.Models
+﻿using Foundation;
+
+namespace Lab1.Models
 {
     internal class Student
     {

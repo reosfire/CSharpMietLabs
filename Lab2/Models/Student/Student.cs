@@ -1,4 +1,4 @@
-﻿using Lab2.Utils;
+﻿using Foundation;
 using System.Collections;
 
 namespace Lab2.Models.Student

@@ -1,23 +1,10 @@
-﻿using Lab1.Models;
+﻿using Foundation;
+using Lab1.Models;
 
 namespace Lab1
 {
-	internal class Program
+	internal class Program: LabBase
 	{
-        private static void RunCommented(string comment, Action action, int lenght = 100)
-		{
-            ConsoleColor previousColor = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(new string('=', lenght));
-            string start = new string('=', lenght / 2 - (comment.Length / 2)) + comment;
-            Console.WriteLine(start + new string('=', lenght - start.Length));
-            Console.WriteLine(new string('=', lenght));
-            Console.ForegroundColor = previousColor;
-
-			action();
-			Console.WriteLine();
-		}
-
 		static void Main()
 		{
             Student student = new Student();
@@ -60,6 +47,8 @@ namespace Lab1
 
             RunCommented("5. Benchmarks", () =>
             {
+                string DoSomeWorkWithExam(Exam exam) => exam.ToString();
+
                 int size = 100000;
 
                 Exam[] oneDimension = Mocker.MockExamsOneDimensional(size);
@@ -99,10 +88,5 @@ namespace Lab1
                 }));
             });
 		}
-
-        private static string DoSomeWorkWithExam(Exam exam)
-        {
-            return exam.ToString();
-        }
 	}
 }

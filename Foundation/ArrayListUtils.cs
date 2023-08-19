@@ -1,14 +1,8 @@
-﻿using Lab2.Models;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 
-namespace Lab2.Utils
+namespace Foundation
 {
-    internal static class ArrayListUtils
+    public static class ArrayListUtils
     {
         public static ArrayList ToArrayList<T>(this IEnumerable<T> collection)
         {

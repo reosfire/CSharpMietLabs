@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 
-namespace Lab2
+namespace Foundation
 {
-	internal class BenchmarkRunner
+	public class BenchmarkRunner
 	{
 		private Stopwatch _stopwatch = new Stopwatch();
 

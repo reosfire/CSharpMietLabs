@@ -1,12 +1,10 @@
 ﻿using System.Text;
 
-namespace Lab2.Utils
+namespace Foundation
 {
-    internal static class StringUtils
+    public static class StringUtils
     {
-        public static string Tabulate(this string s) => s.Tabulate(1);
-
-        public static string Tabulate(this string s, int times) =>
+        public static string Tabulate(this string s, int times = 1) => 
             string.Join('\n', s.Split('\n').Select(it => new string(' ', times * 3) + it));
 
         public static string Detabulate(this string s)
@@ -29,9 +27,7 @@ namespace Lab2.Utils
             return s;
         }
 
-        public static string ToStringTabulated<T>(this IEnumerable<T> collection) where T : notnull
-        {
-            return string.Join("\n\n", collection.Select(it => "   -" + it?.ToString()?.Tabulate(2)[4..]));
-        }
+        public static string ToStringTabulated<T>(this IEnumerable<T> collection) where T : notnull =>
+            string.Join("\n\n", collection.Select(it => "   -" + it?.ToString()?.Tabulate(2)[4..]));
     }
 }
