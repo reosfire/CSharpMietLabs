@@ -18,11 +18,11 @@
             }
         }
 
-        public Person(string name, string surname, DateTime burthday)
+        public Person(string name, string surname, DateTime birthday)
         {
             _name = name;
             _surname = surname;
-            _birthday = burthday;
+            _birthday = birthday;
         }
 
         public Person()
