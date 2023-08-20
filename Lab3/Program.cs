@@ -5,11 +5,11 @@ using Lab3.Models.Student;
 namespace Lab3
 {
     internal class Program: LabBase
-	{
-		static void Main()
-		{
-			RunCommented("1. Sorting", () =>
-			{
+    {
+        static void Main()
+        {
+            RunCommented("1. Sorting", () =>
+            {
                 Student student = Mocker.MockStudent();
                 student.AddExams(Mocker.MockArrayWith(Mocker.MockExam));
 
@@ -54,5 +54,5 @@ namespace Lab3
                 TestCollection<Person, Student> testCollection = new TestCollection<Person, Student>(count);
             });
         }
-	}
+    }
 }

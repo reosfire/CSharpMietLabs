@@ -5,11 +5,11 @@ using Lab2.Models.Student;
 namespace Lab2
 {
     internal class Program: LabBase
-	{
-		static void Main()
-		{
-			RunCommented("1. Equality and hashes", () =>
-			{
+    {
+        static void Main()
+        {
+            RunCommented("1. Equality and hashes", () =>
+            {
                 Student student1 = new Student();
                 Student student2 = new Student();
 
@@ -158,5 +158,5 @@ namespace Lab2
                 }
             });
         }
-	}
+    }
 }

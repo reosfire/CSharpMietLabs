@@ -3,14 +3,14 @@ using Lab1.Models;
 
 namespace Lab1
 {
-	internal class Program: LabBase
-	{
-		static void Main()
-		{
+    internal class Program: LabBase
+    {
+        static void Main()
+        {
             Student student = new Student();
 
-			RunCommented("1. Print default student", () =>
-			{
+            RunCommented("1. Print default student", () =>
+            {
                 Console.WriteLine(student);
             });
 
@@ -87,6 +87,6 @@ namespace Lab1
                     }
                 }));
             });
-		}
-	}
+        }
+    }
 }
