@@ -34,7 +34,7 @@
         protected static T ReadUserFriendly<T>(string retryMessage, Func<string, T> parser) =>
             ReadUserFriendly<T>(retryMessage, Console.ReadLine, parser);
 
-        protected static int ReadInt() => ReadUserFriendly("Enter number: ", int.Parse);
-        protected static long ReadLong() => ReadUserFriendly("Enter number: ", long.Parse);
+        protected static int ReadInt() => ReadUserFriendly("Enter an integer: ", int.Parse);
+        protected static long ReadLong() => ReadUserFriendly("Enter an integer: ", long.Parse);
     }
 }

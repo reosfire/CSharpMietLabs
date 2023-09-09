@@ -50,8 +50,24 @@ namespace Lab3
 
             RunCommented("4. Test collection", () =>
             {
-                int count = ReadInt();
-                TestCollection<Person, Student> testCollection = new TestCollection<Person, Student>(count);
+                int count;
+                while (true)
+                {
+                    count = ReadInt();
+                    if (count > 0) break;
+                    Console.WriteLine("Please enter number greater than zero!!");
+                }
+
+                KeyValuePair<Person, Student> generator(int i)
+                {
+                    Person person = new Person($"name: {i}", $"surname: {i}", DateTime.MinValue);
+                    return new KeyValuePair<Person, Student>(person, Mocker.MockStudent());
+                }
+
+                
+                TestCollection<Person, Student> testCollection = new TestCollection<Person, Student>(count, generator);
+
+                testCollection.RunAllTests();
             });
         }
     }
