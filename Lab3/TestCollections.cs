@@ -1,5 +1,4 @@
 ﻿using Foundation;
-using System.Security.Principal;
 using System.Text;
 
 namespace Lab3
