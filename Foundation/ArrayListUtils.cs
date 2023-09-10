@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.ObjectModel;
 
 namespace Foundation
 {
@@ -28,7 +27,6 @@ namespace Foundation
             }
             return hash;
         }
-
         public static int CombinedHash<T>(this ICollection<T> collection)
         {
             if (collection == null) return -1;

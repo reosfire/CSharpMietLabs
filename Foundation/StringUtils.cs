@@ -32,5 +32,42 @@ namespace Foundation
 
         public static string ToStringTabulated<K, V>(this IEnumerable<KeyValuePair<K, V>> collection) =>
             string.Join("\n\n", collection.Select(it => "   " + it.Key + ":\n" + it.Value?.ToString()?.Tabulate(2)));
+
+
+
+        public static string ToStr(this string value, string label) =>
+            $"{label}: {value}";
+        public static string ToStr(this int value, string label) =>
+            $"{label}: {value}";
+        public static string ToStr(this long value, string label) =>
+            $"{label}: {value}";
+        public static string ToStr(this double value, string label) =>
+            $"{label}: {value}";
+        public static string ToStr(this float value, string label) =>
+            $"{label}: {value}";
+        public static string ToStr(this uint value, string label) =>
+            $"{label}: {value}";
+        public static string ToStr(this ulong value, string label) =>
+            $"{label}: {value}";
+        public static string ToStr(this Enum value, string label) =>
+            $"{label}: {value}";
+        public static string ToStr(this DateTime value, string label) =>
+            $"{label}: {value}";
+
+        public static string ToStr<T>(this IEnumerable<T> collection, string label) where T : notnull
+        {
+            string valueString = collection.ToStringTabulated();
+            if (string.IsNullOrWhiteSpace(valueString)) return $"{label}: [ ]";
+            return $"{label}:\n{valueString}";
+        }
+        public static string ToStr<K, V>(this IEnumerable<KeyValuePair<K, V>> collection, string label)
+        {
+            string valueString = collection.ToStringTabulated();
+            if (string.IsNullOrWhiteSpace(valueString)) return $"{label}: {{ }}";
+            return $"{label}:\n{valueString}";
+        }
+
+        public static string ToStr(this object value, string label) =>
+            $"{label}: \n{value?.ToString()?.Tabulate() ?? "null"}";
     }
 }

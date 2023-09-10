@@ -1,4 +1,6 @@
-﻿namespace Lab1.Models
+﻿using Foundation;
+
+namespace Lab1.Models
 {
     internal class Exam
     {
@@ -12,7 +14,6 @@
             Mark = mark;
             Date = date;
         }
-
         public Exam()
         {
             Subject = "";
@@ -20,6 +21,9 @@
             Date = DateTime.MinValue;
         }
 
-        public override string ToString() => $"Subject: {Subject}\nMark: {Mark}\nDate: {Date}";
+        public override string ToString() =>
+            $"{Subject.ToStr(nameof(Subject))}\n" +
+            $"{Mark.ToStr(nameof(Mark))}\n" +
+            $"{Date.ToStr(nameof(Date))}";
     }
 }

@@ -4,7 +4,7 @@ namespace Foundation
 {
     public class BenchmarkRunner
     {
-        private Stopwatch _stopwatch = new Stopwatch();
+        private readonly Stopwatch _stopwatch = new Stopwatch();
 
         public TimeSpan Run(Action action, int tries = 20)
         {

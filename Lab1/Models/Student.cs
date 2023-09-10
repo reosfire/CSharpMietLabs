@@ -41,7 +41,6 @@ namespace Lab1.Models
             _group = group;
             _passedExams = passedExams;
         }
-
         public Student()
         {
             _personalData = new Person();
@@ -62,14 +61,16 @@ namespace Lab1.Models
             _passedExams = newExamsArray;
         }
 
-        public override string ToString() => $"PersonalData: \n{PersonalData.ToString().Tabulate()}\n" +
-            $"Education: {Education}\n" +
-            $"Group: {Group}\n" +
-            $"PassedExams: {(_passedExams.Length > 0 ? "\n" + _passedExams.ToStringTabulated() : "[ ]")}";
+        public override string ToString() => 
+            $"{PersonalData.ToStr(nameof(PersonalData))}\n" +
+            $"{Education.ToStr(nameof(Education))}\n" +
+            $"{Group.ToStr(nameof(Group))}\n" +
+            $"{PassedExams.ToStr(nameof(PassedExams))}";
 
-        public string ToShortString() => $"PersonalData: \n{PersonalData.ToString().Tabulate()}\n" +
-            $"Education: {Education}\n" +
-            $"Group: {Group}\n" +
-            $"AverageMark: {AverageMark}";
+        public string ToShortString() => 
+            $"{PersonalData.ToStr(nameof(PersonalData))}\n" +
+            $"{Education.ToStr(nameof(Education))}\n" +
+            $"{Group.ToStr(nameof(Group))}\n" +
+            $"{AverageMark.ToStr(nameof(AverageMark))}";
     }
 }

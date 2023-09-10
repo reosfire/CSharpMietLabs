@@ -1,9 +1,11 @@
-﻿namespace Lab1.Models
+﻿using Foundation;
+
+namespace Lab1.Models
 {
     internal class Person
     {
-        private string _name;
-        private string _surname;
+        private readonly string _name;
+        private readonly string _surname;
         private DateTime _birthday;
 
         public string Name => _name;
@@ -24,7 +26,6 @@
             _surname = surname;
             _birthday = birthday;
         }
-
         public Person()
         {
             _name = "";
@@ -32,8 +33,12 @@
             _birthday = DateTime.MinValue;
         }
 
-        public override string ToString() => $"Name: {_name}\nSurname: {_surname}\nBirthday: {_birthday}";
+        public override string ToString() => 
+            $"{Name.ToStr(nameof(Name))}\n" +
+            $"{Surname.ToStr(nameof(Surname))}\n" +
+            $"{Birthday.ToStr(nameof(Birthday))}";
 
-        public virtual string ToShortString() => $"{_name} {_surname}";
+        public virtual string ToShortString() =>
+            $"{_name} {_surname}";
     }
 }

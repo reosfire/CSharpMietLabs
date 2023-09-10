@@ -6,6 +6,7 @@ namespace Lab5
     {
         static void Main()
         {
+            MemoryStream stream = new MemoryStream();
 
         }
     }

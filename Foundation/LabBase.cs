@@ -1,8 +1,10 @@
 ﻿namespace Foundation
 {
-    public class LabBase
+    public class LabBase<TMocker> where TMocker : SharedMocker, new()
     {
-        protected static void RunCommented(string comment, Action action, int lenght = 100)
+        protected TMocker mocker = new TMocker();
+
+        protected void RunCommented(string comment, Action action, int lenght = 100)
         {
             ConsoleColor previousColor = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Green;
@@ -16,7 +18,7 @@
             Console.WriteLine();
         }
 
-        protected static T ReadUserFriendly<T>(string retryMessage, Func<string?> reader, Func<string, T> parser)
+        protected T ReadUserFriendly<T>(string retryMessage, Func<string?> reader, Func<string, T> parser)
         {
             while (true)
             {
@@ -31,10 +33,10 @@
             }
         }
 
-        protected static T ReadUserFriendly<T>(string retryMessage, Func<string, T> parser) =>
-            ReadUserFriendly<T>(retryMessage, Console.ReadLine, parser);
+        protected T ReadUserFriendly<T>(string retryMessage, Func<string, T> parser) =>
+            ReadUserFriendly(retryMessage, Console.ReadLine, parser);
 
-        protected static int ReadInt() => ReadUserFriendly("Enter an integer: ", int.Parse);
-        protected static long ReadLong() => ReadUserFriendly("Enter an integer: ", long.Parse);
+        protected int ReadInt() => ReadUserFriendly("Enter an integer: ", int.Parse);
+        protected long ReadLong() => ReadUserFriendly("Enter an integer: ", long.Parse);
     }
 }
