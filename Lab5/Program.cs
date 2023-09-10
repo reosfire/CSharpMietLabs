@@ -2,7 +2,7 @@
 
 namespace Lab5
 {
-    internal class Program: LabBase
+    internal class Program: LabBase<SharedMocker>
     {
         static void Main()
         {

@@ -1,4 +1,4 @@
-﻿using Lab2;
+﻿using Foundation;
 
 namespace Lab2.Models
 {
@@ -31,7 +31,6 @@ namespace Lab2.Models
             _surname = surname;
             _birthday = birthday;
         }
-
         public Person()
         {
             _name = "";
@@ -39,9 +38,12 @@ namespace Lab2.Models
             _birthday = DateTime.MinValue;
         }
 
-        public override string ToString() => $"Name: {_name}\nSurname: {_surname}\nBirthday: {_birthday}";
-
-        public virtual string ToShortString() => $"{_name} {_surname}";
+        public override string ToString() =>
+            $"{Name.ToStr(nameof(Name))}\n" +
+            $"{Surname.ToStr(nameof(Surname))}\n" +
+            $"{Birthday.ToStr(nameof(Birthday))}";
+        public virtual string ToShortString() =>
+            $"{_name} {_surname}";
 
         public virtual object DeepCopy() => new Person(Name, Surname, Birthday);
 

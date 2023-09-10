@@ -1,7 +1,7 @@
 ﻿using Foundation;
 using System.Collections;
 
-namespace Lab3.Models.Student
+namespace Lab3.Models.Students
 {
     internal class Student : Person, IEnumerable<string>
     {
@@ -45,7 +45,7 @@ namespace Lab3.Models.Student
             set => _tests = value;
         }
 
-        public double AverageMark => _exams.Cast<Exam>().Sum(it => (long)it.Mark) / (double)_exams.Count;
+        public double AverageMark => _exams.Sum(it => (long)it.Mark) / (double)_exams.Count;
 
         public bool this[Education expected] => _education == expected;
 
@@ -74,14 +74,16 @@ namespace Lab3.Models.Student
         public void AddExams(params Exam[] exams) => _exams.AddRange(exams);
         public void AddTests(params Test[] tests) => _tests.AddRange(tests);
 
-        public override string ToString() => base.ToString() + "\n" +
+        public override string ToString() => 
+            base.ToString() + "\n" +
             $"Education: {Education}\n" +
             $"Group: {Group}\n" +
             $"AverageMark: {AverageMark}\n" +
             $"Exams: {(_exams.Count > 0 ? "\n" + _exams.ToStringTabulated() : "[ ]")}\n" +
             $"Tests: {(_tests.Count > 0 ? "\n" + _tests.ToStringTabulated() : "[ ]")}";
 
-        public override string ToShortString() => base.ToString() + "\n" +
+        public override string ToShortString() => 
+            base.ToString() + "\n" +
             $"Education: {Education}\n" +
             $"Group: {Group}\n" +
             $"AverageMark: {AverageMark}\n" +

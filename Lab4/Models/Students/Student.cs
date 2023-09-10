@@ -59,7 +59,7 @@ namespace Lab4.Models.Students
             set => _tests = value;
         }
 
-        public double AverageMark => _exams.Cast<Exam>().Sum(it => (long)it.Mark) / (double)_exams.Count;
+        public double AverageMark => _exams.Sum(it => (long)it.Mark) / (double)_exams.Count;
 
         public bool this[Education expected] => _education == expected;
 

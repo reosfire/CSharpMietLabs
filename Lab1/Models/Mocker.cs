@@ -8,15 +8,13 @@ namespace Lab1.Models
             new Person(
                 MockString("[mock name] "),
                 MockString("[mock surname] "),
-                MockDateTime()
-                );
+                MockDateTime());
 
         public Exam MockExam() =>
             new Exam(
                 MockString("[mock subject] "),
                 MockInt(),
-                MockDateTime()
-                );
+                MockDateTime());
 
         public Education MockEducation() =>
             MockEnum<Education>();
@@ -26,8 +24,7 @@ namespace Lab1.Models
                 MockPerson(),
                 MockEducation(),
                 MockInt(),
-                MockArrayWith(() => MockExam())
-                );
+                MockArrayWith(() => MockExam()));
 
 
         public Exam[] MockExamsOneDimensional(int count)

@@ -1,11 +1,6 @@
 ﻿using Foundation;
 using Lab3.Models;
-using Lab3.Models.Student;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Lab3.Models.Students;
 
 namespace Lab3
 {
@@ -41,10 +36,10 @@ namespace Lab3
                 Add(student);
         }
 
-        public void AddDefaults(int count)
+        public void AddDefaults(int count, Func<Student> generator)
         {
             for (var i = 0; i < count; i++)
-                Add(Mocker.MockStudent());
+                Add(generator());
         }
 
         public IEnumerable<KeyValuePair<TKey, Student>> EducationForm(Education value) =>

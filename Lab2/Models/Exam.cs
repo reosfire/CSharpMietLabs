@@ -1,5 +1,4 @@
-﻿using Lab2;
-using System.Xml.Linq;
+﻿using Foundation;
 
 namespace Lab2.Models
 {
@@ -15,7 +14,6 @@ namespace Lab2.Models
             Mark = mark;
             Date = date;
         }
-
         public Exam()
         {
             Subject = "";
@@ -23,7 +21,10 @@ namespace Lab2.Models
             Date = DateTime.MinValue;
         }
 
-        public override string ToString() => $"Subject: {Subject}\nMark: {Mark}\nDate: {Date}";
+        public override string ToString() =>
+            $"{Subject.ToStr(nameof(Subject))}\n" +
+            $"{Mark.ToStr(nameof(Mark))}\n" +
+            $"{Date.ToStr(nameof(Date))}";
 
         public virtual object DeepCopy() => new Exam(Subject, Mark, Date);
 

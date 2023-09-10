@@ -49,6 +49,8 @@ namespace Foundation
             $"{label}: {value}";
         public static string ToStr(this ulong value, string label) =>
             $"{label}: {value}";
+        public static string ToStr(this bool value, string label) =>
+            $"{label}: {value}";
         public static string ToStr(this Enum value, string label) =>
             $"{label}: {value}";
         public static string ToStr(this DateTime value, string label) =>

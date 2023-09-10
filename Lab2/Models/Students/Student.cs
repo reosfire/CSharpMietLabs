@@ -1,7 +1,7 @@
 ﻿using Foundation;
 using System.Collections;
 
-namespace Lab2.Models.Student
+namespace Lab2.Models.Students
 {
     internal class Student : Person, IEnumerable<string>
     {
@@ -62,7 +62,6 @@ namespace Lab2.Models.Student
             _exams = exams;
             _tests = test;
         }
-
         public Student()
         {
             _education = Education.Bachelor;
@@ -74,24 +73,25 @@ namespace Lab2.Models.Student
         public void AddExams(params Exam[] exams) => _exams.AddRange(exams);
         public void AddTests(params Test[] tests) => _tests.AddRange(tests);
 
-        public override string ToString() => base.ToString() + "\n" +
-            $"Education: {Education}\n" +
-            $"Group: {Group}\n" +
-            $"Exams: {(_exams.Count > 0 ? "\n" + _exams.ToArray().Cast<Exam>().ToStringTabulated() : "[ ]")}\n" +
-            $"Tests: {(_tests.Count > 0 ? "\n" + _tests.ToArray().Cast<Test>().ToStringTabulated() : "[ ]")}";
+        public override string ToString() =>
+            $"{base.ToString()}\n" +
+            $"{Education.ToStr(nameof(Education))}\n" +
+            $"{Group.ToStr(nameof(Group))}\n" +
+            $"{Exams.Cast<Exam>().ToStr(nameof(Exams))}\n" +
+            $"{Tests.Cast<Test>().ToStr(nameof(Tests))}";
 
-        public override string ToShortString() => base.ToString() + "\n" +
-            $"Education: {Education}\n" +
-            $"Group: {Group}\n" +
-            $"AverageMark: {AverageMark}";
+        public override string ToShortString() =>
+            $"{base.ToString()}\n" +
+            $"{Education.ToStr(nameof(Education))}\n" +
+            $"{Group.ToStr(nameof(Group))}\n" +
+            $"{AverageMark.ToStr(nameof(AverageMark))}";
 
         public new Student DeepCopy() =>
             new Student(this,
                 Education,
                 Group,
                 _exams.Cast<Exam>().Select(it => it.DeepCopy()).ToArrayList(),
-                _tests.Cast<Test>().Select(it => it.DeepCopy()).ToArrayList()
-                );
+                _tests.Cast<Test>().Select(it => it.DeepCopy()).ToArrayList());
 
         public override bool Equals(object? obj)
         {
@@ -108,8 +108,7 @@ namespace Lab2.Models.Student
                 Education,
                 Group,
                 Exams.CombinedHash(),
-                Tests.CombinedHash()
-                );
+                Tests.CombinedHash());
 
         public IEnumerable<object> ExamsAndTests() =>
             Exams.Cast<object>().Concat(Tests.Cast<object>());

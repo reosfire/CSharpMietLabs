@@ -4,6 +4,6 @@
     {
         Specialist,
         Bachelor,
-        SecondEducation
+        SecondEducation,
     }
 }

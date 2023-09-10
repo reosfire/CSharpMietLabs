@@ -1,8 +1,9 @@
 ﻿namespace Foundation
 {
-    public class LabBase<TMocker> where TMocker : SharedMocker, new()
+    public abstract class LabBase<TMocker>
+        where TMocker : SharedMocker, new()
     {
-        protected TMocker mocker = new TMocker();
+        protected TMocker mocker = new();
 
         protected void RunCommented(string comment, Action action, int lenght = 100)
         {

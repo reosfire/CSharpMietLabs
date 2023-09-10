@@ -54,6 +54,6 @@ namespace Foundation
             return generated;
         }
         public List<T> MockListWith<T>(Func<T> generator, int minSize = 5, int maxSize = 10) =>
-            MockListWith(generator, MockInt(maxSize, minSize));
+            MockListWith(generator, MockInt(minSize, maxSize));
     }
 }

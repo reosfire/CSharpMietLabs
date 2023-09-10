@@ -1,17 +1,19 @@
 ﻿using Foundation;
 using Lab3.Models;
-using Lab3.Models.Student;
+using Lab3.Models.Students;
 
 namespace Lab3
 {
-    internal class Program: LabBase
+    internal class Program: LabBase<Mocker>
     {
-        static void Main()
+        static void Main() => new Program().Run();
+
+        private void Run()
         {
             RunCommented("1. Sorting", () =>
             {
-                Student student = Mocker.MockStudent();
-                student.AddExams(Mocker.MockArrayWith(Mocker.MockExam));
+                Student student = mocker.MockStudent();
+                student.AddExams(mocker.MockArrayWith(mocker.MockExam));
 
                 Console.WriteLine("Initial: \n{0}", student.Exams.ToStringTabulated());
 
@@ -29,7 +31,7 @@ namespace Lab3
 
             RunCommented("2. StudentsCollection add", () =>
             {
-                studentCollection.AddDefaults(4);
+                studentCollection.AddDefaults(4, mocker.MockStudent);
 
                 Console.WriteLine(studentCollection);
             });
@@ -61,7 +63,7 @@ namespace Lab3
                 KeyValuePair<Person, Student> generator(int i)
                 {
                     Person person = new Person($"name: {i}", $"surname: {i}", DateTime.MinValue);
-                    return new KeyValuePair<Person, Student>(person, Mocker.MockStudent());
+                    return new KeyValuePair<Person, Student>(person, mocker.MockStudent());
                 }
 
                 

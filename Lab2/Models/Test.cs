@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Foundation;
 
 namespace Lab2.Models
 {
@@ -16,14 +12,15 @@ namespace Lab2.Models
             Subject = subject;
             Passed = passed;
         }
-
         public Test()
         {
             Subject = "";
             Passed = false;
         }
 
-        public override string ToString() => $"Subject: {Subject}\nPassed: {Passed}";
+        public override string ToString() =>
+            $"{Subject.ToStr(nameof(Subject))}\n" +
+            $"{Passed.ToStr(nameof(Passed))}";
 
         public object DeepCopy() => new Test(Subject, Passed);
     }

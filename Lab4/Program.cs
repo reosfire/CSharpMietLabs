@@ -3,14 +3,14 @@ using Lab4.Models;
 using Lab4.Models.Students;
 using Lab4.Models.Students.Collection;
 using Lab4.Models.Students.Logging;
-using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
 
 namespace Lab4
 {
-    internal class Program: LabBase
+    internal class Program: LabBase<Mocker>
     {
-        static void Main()
+        static void Main() => new Program().Run();
+
+        private void Run()
         {
             StudentCollection<string> firstCollection = new(it => it.Name + it.Surname, "First collection");
             StudentCollection<string> secondCollection = new(it => it.Name + it.Surname, "Second collection");
@@ -21,7 +21,7 @@ namespace Lab4
             secondCollection.StudentsChanged += journal.On;
 
 
-            Student[] students = Mocker.MockArrayWith(Mocker.MockStudent, 4, 4);
+            Student[] students = mocker.MockArrayWith(mocker.MockStudent, 4, 4);
             for (int i = 0; i < students.Length; i++)
             {
                 students[i].Person = new Person($"name: {i}", $"surname: {i}", DateTime.Now);

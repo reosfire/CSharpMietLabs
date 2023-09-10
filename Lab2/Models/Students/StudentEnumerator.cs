@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace Lab3.Models.Student
+namespace Lab2.Models.Students
 {
     internal class StudentEnumerator : IEnumerator<string>
     {
@@ -8,8 +8,8 @@ namespace Lab3.Models.Student
         private readonly IEnumerable<string> _testsSubjects;
         public StudentEnumerator(Student student)
         {
-            _examsSubjects = student.Exams.Select(it => it.Subject).GetEnumerator();
-            _testsSubjects = student.Tests.Select(it => it.Subject);
+            _examsSubjects = student.Exams.Cast<Exam>().Select(it => it.Subject).GetEnumerator();
+            _testsSubjects = student.Tests.Cast<Test>().Select(it => it.Subject);
         }
 
         public string Current => _examsSubjects.Current;

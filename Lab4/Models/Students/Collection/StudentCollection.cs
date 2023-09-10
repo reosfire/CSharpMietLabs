@@ -55,10 +55,10 @@ namespace Lab4.Models.Students.Collection
                 Add(student);
         }
 
-        public void AddDefaults(int count)
+        public void AddDefaults(int count, Func<Student> generator)
         {
             for (var i = 0; i < count; i++)
-                Add(Mocker.MockStudent());
+                Add(generator());
         }
 
         private bool Remove(TKey key, Student value)
