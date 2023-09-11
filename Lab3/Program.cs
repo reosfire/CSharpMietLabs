@@ -60,6 +60,7 @@ namespace Lab3
                 int count;
                 while (true)
                 {
+                    Console.Write("Enter number of elements in collections to test: ");
                     count = ReadInt();
                     if (count > 0) break;
                     Console.WriteLine("Please enter number greater than zero!!");

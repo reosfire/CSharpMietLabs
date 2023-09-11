@@ -29,7 +29,7 @@
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine(retryMessage);
+                    Console.Write(retryMessage);
                 }
             }
         }
