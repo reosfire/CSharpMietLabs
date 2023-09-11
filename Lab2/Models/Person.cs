@@ -18,11 +18,8 @@ namespace Lab2.Models
         }
         public int BirthYear
         {
-            get { return _birthday.Year; }
-            set
-            {
-                _birthday = new DateTime(value, Birthday.Month, Birthday.Day);
-            }
+            get => _birthday.Year;
+            set => _birthday = new DateTime(value, Birthday.Month, Birthday.Day);
         }
 
         public Person(string name, string surname, DateTime birthday)
@@ -49,16 +46,15 @@ namespace Lab2.Models
 
         public override bool Equals(object? obj)
         {
-            if (obj is null) return false;
             if (obj is not Person other) return false;
             return Name == other.Name && Surname == other.Surname && Birthday == other.Birthday;
         }
         public override int GetHashCode() => HashCode.Combine(Name, Surname, Birthday);
-        public static bool operator ==(Person a, Person b)
+        public static bool operator ==(Person? a, Person? b)
         {
             if (a is null) return b is null;
             return a.Equals(b);
         }
-        public static bool operator !=(Person a, Person b) => !(a == b);
+        public static bool operator !=(Person? a, Person? b) => !(a == b);
     }
 }

@@ -48,7 +48,6 @@ namespace Lab2
                 Console.WriteLine(student2.ToString().Tabulate());
 
                 student2.Person = new Person("wtf", "wtf", DateTime.Now);
-                student2.Date = DateTime.Now;
                 student2.BirthYear = 2023;
                 student2.Education = Education.Bachelor;
                 student2.Group = 222;
@@ -67,10 +66,8 @@ namespace Lab2
             {
                 try
                 {
-                    new Student()
-                    {
-                        Group = 1,
-                    };
+                    Student student = new();
+                    student.Group = 1;
                 }
                 catch (Exception ex)
                 {
@@ -122,7 +119,7 @@ namespace Lab2
                 new Test("Subject 10", true)
                 );
 
-            RunCommented("8. Itersecting subjects", () =>
+            RunCommented("8. Intersecting subjects", () =>
             {
                 foreach (string subject in sharedStudent)
                 {

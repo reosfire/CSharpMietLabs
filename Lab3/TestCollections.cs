@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Lab3
 {
-    delegate KeyValuePair<TKey, TValue> GenerateElement<TKey, TValue>(int j);
+    internal delegate KeyValuePair<TKey, TValue> GenerateElement<TKey, TValue>(int j);
 
     internal class TestCollection<TKey, TValue> 
         where TKey : notnull
@@ -22,10 +22,10 @@ namespace Lab3
         {
             for (int i = 0; i < count; i++)
             {
-                var generated = generator(i);
+                KeyValuePair<TKey, TValue> generated = generator(i);
 
                 _keysList.Add(generated.Key);
-                _stringsList.Add(generated.Key!.ToString()!);
+                _stringsList.Add(generated.Key.ToString()!);
 
                 _keyedDictionary.Add(generated.Key, generated.Value);
                 _stringDictionary.Add(generated.Key.ToString()!, generated.Value);
@@ -42,7 +42,7 @@ namespace Lab3
 
         public void RunAllTests()
         {
-            foreach (var(searchElement, searchElementLabel) in _searchedElements)
+            foreach ((TKey searchElement, string searchElementLabel) in _searchedElements)
             {
                 Console.WriteLine($"Tests for: {searchElementLabel}");
 
@@ -60,7 +60,7 @@ namespace Lab3
             }
         }
 
-        private (TimeSpan, string)[] RunTestsFor(TKey key) => new (TimeSpan, string)[]
+        private (TimeSpan, string)[] RunTestsFor(TKey key) => new []
         {
             (_runner.Run(() =>
             {
@@ -68,7 +68,7 @@ namespace Lab3
             }), "item in list with keys"),
             (_runner.Run(() =>
             {
-                _stringsList.Contains(key!.ToString()!);
+                _stringsList.Contains(key.ToString()!);
             }), "item in list with strings"),
             (_runner.Run(() =>
             {
@@ -76,7 +76,7 @@ namespace Lab3
             }), "key in dict with keys"),
             (_runner.Run(() =>
             {
-                _stringDictionary.ContainsKey(key!.ToString()!);
+                _stringDictionary.ContainsKey(key.ToString()!);
             }), "key in with string"),
             (_runner.Run(() =>
             {

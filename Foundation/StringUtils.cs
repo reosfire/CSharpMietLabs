@@ -11,9 +11,9 @@ namespace Foundation
         {
             string[] lines = s.Split('\n');
 
-            StringBuilder resultBuilder = new StringBuilder();
+            StringBuilder resultBuilder = new();
 
-            foreach (var line in lines)
+            foreach (string line in lines)
             {
                 resultBuilder.Append(line.AssertStartsWithTab()[3..]);
             }
@@ -22,15 +22,15 @@ namespace Foundation
 
         private static string AssertStartsWithTab(this string s)
         {
-            if (s.Length < 3) throw new ArgumentException("Line shoudld be at least 3 characters long");
-            if (s[0..2].Any(it => it != ' ')) throw new ArgumentException("Line shoudld starts wint 3 spaces");
+            if (s.Length < 3) throw new ArgumentException("Line should be at least 3 characters long");
+            if (s[0..2].Any(it => it != ' ')) throw new ArgumentException("Line should starts with 3 spaces");
             return s;
         }
 
         public static string ToStringTabulated<T>(this IEnumerable<T> collection) where T : notnull =>
-            string.Join("\n\n", collection.Select(it => "   -" + it?.ToString()?.Tabulate(2)[4..]));
+            string.Join("\n\n", collection.Select(it => "   -" + it.ToString()?.Tabulate(2)[4..]));
 
-        public static string ToStringTabulated<K, V>(this IEnumerable<KeyValuePair<K, V>> collection) =>
+        public static string ToStringTabulated<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> collection) =>
             string.Join("\n\n", collection.Select(it => "   " + it.Key + ":\n" + it.Value?.ToString()?.Tabulate(2)));
 
 
@@ -62,7 +62,7 @@ namespace Foundation
             if (string.IsNullOrWhiteSpace(valueString)) return $"{label}: [ ]";
             return $"{label}:\n{valueString}";
         }
-        public static string ToStr<K, V>(this IEnumerable<KeyValuePair<K, V>> collection, string label)
+        public static string ToStr<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> collection, string label)
         {
             string valueString = collection.ToStringTabulated();
             if (string.IsNullOrWhiteSpace(valueString)) return $"{label}: {{ }}";

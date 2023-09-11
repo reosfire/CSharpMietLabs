@@ -134,11 +134,11 @@ namespace Lab3.Models.Students
         public void SortExamsByMark() => Exams.Sort(new Exam());
         public void SortExamsByDate() => Exams.Sort(new ExamDateComparer());
 
-        public static bool operator ==(Student a, Student b)
+        public static bool operator ==(Student? a, Student? b)
         {
             if (a is null) return b is null;
             return a.Equals(b);
         }
-        public static bool operator !=(Student a, Student b) => !(a == b);
+        public static bool operator !=(Student? a, Student? b) => !(a == b);
     }
 }

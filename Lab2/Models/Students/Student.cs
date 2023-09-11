@@ -129,11 +129,11 @@ namespace Lab2.Models.Students
         public IEnumerator<string> GetEnumerator() => new StudentEnumerator(this);
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public static bool operator ==(Student a, Student b)
+        public static bool operator ==(Student? a, Student? b)
         {
             if (a is null) return b is null;
             return a.Equals(b);
         }
-        public static bool operator !=(Student a, Student b) => !(a == b);
+        public static bool operator !=(Student? a, Student? b) => !(a == b);
     }
 }

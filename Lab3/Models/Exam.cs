@@ -40,7 +40,7 @@ namespace Lab3.Models
         public int CompareTo(Exam? other)
         {
             if (other is null) return -1;
-            return Subject.CompareTo(other.Subject);
+            return string.Compare(Subject, other.Subject, StringComparison.Ordinal);
         }
 
         public int Compare(Exam? x, Exam? y)
