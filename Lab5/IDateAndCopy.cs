@@ -1,4 +1,4 @@
-﻿namespace Lab4
+﻿namespace Lab5
 {
     internal interface IDateAndCopy
     {

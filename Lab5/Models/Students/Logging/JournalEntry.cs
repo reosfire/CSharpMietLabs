@@ -1,7 +1,7 @@
 ﻿using Foundation;
-using Action = Lab4.Models.Students.Collection.Action;
+using Action = Lab5.Models.Students.Collection.Action;
 
-namespace Lab4.Models.Students.Logging
+namespace Lab5.Models.Students.Logging
 {
     internal class JournalEntry
     {

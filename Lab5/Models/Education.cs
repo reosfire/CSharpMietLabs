@@ -1,4 +1,4 @@
-﻿namespace Lab4.Models
+﻿namespace Lab5.Models
 {
     internal enum Education
     {

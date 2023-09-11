@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace Lab4.Models.Students
+namespace Lab5.Models.Students
 {
     internal class StudentEnumerator : IEnumerator<string>
     {

@@ -1,8 +1,8 @@
-﻿using Foundation;
-using System.Collections;
+﻿using System.Collections;
 using System.ComponentModel;
+using Foundation;
 
-namespace Lab4.Models.Students
+namespace Lab5.Models.Students
 {
     internal class Student : Person, IEnumerable<string>, INotifyPropertyChanged
     {

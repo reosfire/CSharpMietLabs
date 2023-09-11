@@ -1,7 +1,7 @@
 ﻿using Foundation;
-using Lab4.Models.Students.Collection;
+using Lab5.Models.Students.Collection;
 
-namespace Lab4.Models.Students.Logging
+namespace Lab5.Models.Students.Logging
 {
     internal class Journal<TKey> where TKey : notnull
     {

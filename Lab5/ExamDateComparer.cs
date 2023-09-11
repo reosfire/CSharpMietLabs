@@ -1,6 +1,6 @@
-﻿using Lab4.Models;
+﻿using Lab5.Models;
 
-namespace Lab4
+namespace Lab5
 {
     internal class ExamDateComparer : IComparer<Exam>
     {

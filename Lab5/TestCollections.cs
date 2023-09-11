@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Foundation;
 
-namespace Lab4
+namespace Lab5
 {
     delegate KeyValuePair<TKey, TValue> GenerateElement<TKey, TValue>(int j);
 

@@ -1,7 +1,7 @@
-﻿using Foundation;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using Foundation;
 
-namespace Lab4.Models.Students.Collection
+namespace Lab5.Models.Students.Collection
 {
     internal delegate TKey KeySelector<out TKey>(Student student);
 

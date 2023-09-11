@@ -1,10 +1,10 @@
 ﻿using Foundation;
-using Lab4.Models;
-using Lab4.Models.Students;
-using Lab4.Models.Students.Collection;
-using Lab4.Models.Students.Logging;
+using Lab5.Models;
+using Lab5.Models.Students;
+using Lab5.Models.Students.Collection;
+using Lab5.Models.Students.Logging;
 
-namespace Lab4
+namespace Lab5
 {
     internal class Program: LabBase<Mocker>
     {

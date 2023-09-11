@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace Lab4.Models
+namespace Lab5.Models
 {
     internal class Exam: IDateAndCopy, IComparable<Exam>, IComparer<Exam>
     {

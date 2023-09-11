@@ -1,4 +1,4 @@
-﻿namespace Lab4.Models.Students.Collection
+﻿namespace Lab5.Models.Students.Collection
 {
     internal enum Action
     {

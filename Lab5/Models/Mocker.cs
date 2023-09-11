@@ -1,7 +1,7 @@
 ﻿using Foundation;
-using Lab4.Models.Students;
+using Lab5.Models.Students;
 
-namespace Lab4.Models
+namespace Lab5.Models
 {
     internal class Mocker : SharedMocker
     {
