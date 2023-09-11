@@ -6,6 +6,11 @@ namespace Lab3
 {
     internal class Program: LabBase<Mocker>
     {
+        // Summary:
+        // Different sorting. IComparable IComparer
+        // Use of List finally!!
+        // Advanced Linq grouping
+        // Collection to benchmark insertion to Dictionary and List
         private static void Main() => new Program().Run();
 
         private void Run()
@@ -43,7 +48,7 @@ namespace Lab3
                 Console.WriteLine("Filtered by education form: ");
                 Console.WriteLine(studentCollection.EducationForm(Education.Bachelor).ToStringTabulated());
 
-                Console.WriteLine("Groupped: ");
+                Console.WriteLine("Grouped: ");
                 foreach (var grouping in studentCollection.GroupByEducation)
                 {
                     Console.WriteLine((grouping.Key + ":\n" + grouping.ToStringTabulated()).Tabulate());

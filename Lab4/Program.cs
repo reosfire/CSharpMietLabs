@@ -8,6 +8,8 @@ namespace Lab4
 {
     internal class Program: LabBase<Mocker>
     {
+        // Summary:
+        // Events for logging
         private static void Main() => new Program().Run();
 
         private void Run()

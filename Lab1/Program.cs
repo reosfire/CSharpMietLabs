@@ -5,6 +5,12 @@ namespace Lab1
 {
     internal class Program: LabBase<Mocker>
     {
+        // Summary:
+        // classes, enums
+        // Override toString
+        // Create custom indexer
+        // Use arrays
+        // Benchmark arrays with different configurations
         private static void Main() => new Program().Run();
 
         private void Run()

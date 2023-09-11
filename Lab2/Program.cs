@@ -6,6 +6,13 @@ namespace Lab2
 {
     internal class Program: LabBase<Mocker>
     {
+        // Summary:
+        // Override equals and hashcode, ==, !=
+        // IDateAndCopy
+        // Use ArrayList
+        // Throw exception in prop
+        // Create some IEnumerables
+
         private static void Main() => new Program().Run();
 
         private void Run()
