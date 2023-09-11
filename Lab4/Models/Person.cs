@@ -1,4 +1,6 @@
-﻿namespace Lab4.Models
+﻿using Foundation;
+
+namespace Lab4.Models
 {
     internal class Person: IDateAndCopy
     {
@@ -16,11 +18,8 @@
         }
         public int BirthYear
         {
-            get { return _birthday.Year; }
-            set
-            {
-                _birthday = new DateTime(value, Birthday.Month, Birthday.Day);
-            }
+            get => _birthday.Year;
+            set => _birthday = new DateTime(value, Birthday.Month, Birthday.Day);
         }
 
         public Person(string name, string surname, DateTime birthday)
@@ -29,17 +28,19 @@
             _surname = surname;
             _birthday = birthday;
         }
-
         public Person()
         {
             _name = "";
             _surname = "";
             _birthday = DateTime.MinValue;
         }
-
-        public override string ToString() => $"Name: {_name}\nSurname: {_surname}\nBirthday: {_birthday}";
-
-        public virtual string ToShortString() => $"{_name} {_surname}";
+        
+        public override string ToString() =>
+            $"{Name.ToStr(nameof(Name))}\n" +
+            $"{Surname.ToStr(nameof(Surname))}\n" +
+            $"{Birthday.ToStr(nameof(Birthday))}";
+        public virtual string ToShortString() =>
+            $"{_name} {_surname}";
 
         public virtual object DeepCopy() => new Person(Name, Surname, Birthday);
 
@@ -50,11 +51,11 @@
             return Name == other.Name && Surname == other.Surname && Birthday == other.Birthday;
         }
         public override int GetHashCode() => HashCode.Combine(Name, Surname, Birthday);
-        public static bool operator ==(Person a, Person b)
+        public static bool operator ==(Person? a, Person? b)
         {
             if (a is null) return b is null;
             return a.Equals(b);
         }
-        public static bool operator !=(Person a, Person b) => !(a == b);
+        public static bool operator !=(Person? a, Person? b) => !(a == b);
     }
 }

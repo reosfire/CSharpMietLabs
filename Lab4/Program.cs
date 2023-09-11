@@ -8,7 +8,7 @@ namespace Lab4
 {
     internal class Program: LabBase<Mocker>
     {
-        static void Main() => new Program().Run();
+        private static void Main() => new Program().Run();
 
         private void Run()
         {
@@ -21,7 +21,7 @@ namespace Lab4
             secondCollection.StudentsChanged += journal.On;
 
 
-            Student[] students = mocker.MockArrayWith(mocker.MockStudent, 4, 4);
+            Student[] students = Mocker.MockArrayWith(Mocker.MockStudent, 4, 4);
             for (int i = 0; i < students.Length; i++)
             {
                 students[i].Person = new Person($"name: {i}", $"surname: {i}", DateTime.Now);
@@ -29,10 +29,10 @@ namespace Lab4
             firstCollection.AddStudents(students[..(students.Length / 2)]);
             secondCollection.AddStudents(students[(students.Length / 2)..]);
 
-            for (int i = 0; i < students.Length; i++)
-                UpdateEducation(students[i]);
-            for (int i = 0; i < students.Length; i++)
-                UpdateGroup(students[i]);
+            foreach (Student student in students)
+                UpdateEducation(student);
+            foreach (Student student in students)
+                UpdateGroup(student);
 
             firstCollection.Remove(students[0]);
 
@@ -42,11 +42,10 @@ namespace Lab4
             Console.WriteLine(journal.ToString());
         }
 
-        private static void UpdateEducation(Student student)
-        {
+        private static void UpdateEducation(Student student) =>
             student.Education = student.Education == Education.Bachelor ? Education.Specialist : Education.Bachelor;
-        }
-        public static void UpdateGroup(Student student)
+        
+        private static void UpdateGroup(Student student)
         {
             if (student.Group >= 599) student.Group = 101;
             else student.Group++;

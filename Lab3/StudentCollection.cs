@@ -4,12 +4,12 @@ using Lab3.Models.Students;
 
 namespace Lab3
 {
-    delegate TKey KeySelector<TKey>(Student student);
+    internal delegate TKey KeySelector<out TKey>(Student student);
 
     internal class StudentCollection<TKey> where TKey : notnull
     {
-        private Dictionary<TKey, Student> _data = new Dictionary<TKey, Student>();
-        private KeySelector<TKey> _keySelector;
+        private readonly Dictionary<TKey, Student> _data = new();
+        private readonly KeySelector<TKey> _keySelector;
 
         public double MaxAverageMark
         {
@@ -32,20 +32,20 @@ namespace Lab3
 
         public void AddStudents(params Student[] students)
         {
-            foreach (var student in students) 
+            foreach (Student student in students) 
                 Add(student);
         }
 
         public void AddDefaults(int count, Func<Student> generator)
         {
-            for (var i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
                 Add(generator());
         }
 
         public IEnumerable<KeyValuePair<TKey, Student>> EducationForm(Education value) =>
             _data.Where(it => it.Value.Education == value);
 
-        public override string ToString() => $"Students: " +
-            $"{(_data.Count > 0 ? "\n" + _data.ToStringTabulated() : "{ }")}";
+        public override string ToString() =>
+            $"{_data.ToStr("Students")}";
     }
 }

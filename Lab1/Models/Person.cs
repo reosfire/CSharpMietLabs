@@ -13,11 +13,8 @@ namespace Lab1.Models
         public DateTime Birthday => _birthday;
         public int BirthYear
         {
-            get { return _birthday.Year; }
-            set
-            {
-                _birthday = new DateTime(value, Birthday.Month, Birthday.Day);
-            }
+            get => _birthday.Year;
+            set => _birthday = new DateTime(value, Birthday.Month, Birthday.Day);
         }
 
         public Person(string name, string surname, DateTime birthday)

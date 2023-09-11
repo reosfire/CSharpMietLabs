@@ -1,4 +1,6 @@
-﻿namespace Lab4.Models
+﻿using Foundation;
+
+namespace Lab4.Models
 {
     internal class Exam: IDateAndCopy, IComparable<Exam>, IComparer<Exam>
     {
@@ -20,7 +22,10 @@
             Date = DateTime.MinValue;
         }
 
-        public override string ToString() => $"Subject: {Subject}\nMark: {Mark}\nDate: {Date}";
+        public override string ToString() =>
+            $"{Subject.ToStr(nameof(Subject))}\n" +
+            $"{Mark.ToStr(nameof(Mark))}\n" +
+            $"{Date.ToStr(nameof(Date))}";
 
         public virtual object DeepCopy() => new Exam(Subject, Mark, Date);
 

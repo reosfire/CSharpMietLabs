@@ -30,7 +30,7 @@ namespace Lab2.Models.Students
             get => _group;
             set
             {
-                if (value <= 100 || value >= 600) throw new ArgumentOutOfRangeException("group must be in (100; 600)");
+                if (value <= 100 || value >= 600) throw new ArgumentOutOfRangeException(nameof(Group), "Value must be in (100; 600)");
                 _group = value;
             }
         }
@@ -87,7 +87,7 @@ namespace Lab2.Models.Students
             $"{AverageMark.ToStr(nameof(AverageMark))}";
 
         public new Student DeepCopy() =>
-            new Student(this,
+            new(this,
                 Education,
                 Group,
                 _exams.Cast<Exam>().Select(it => it.DeepCopy()).ToArrayList(),

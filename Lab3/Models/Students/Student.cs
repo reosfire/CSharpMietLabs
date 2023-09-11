@@ -30,7 +30,7 @@ namespace Lab3.Models.Students
             get => _group;
             set
             {
-                if (value <= 100 || value >= 600) throw new ArgumentOutOfRangeException("group must be in (100; 600)");
+                if (value <= 100 || value >= 600) throw new ArgumentOutOfRangeException(nameof(Group), "Value must be in (100; 600)");
                 _group = value;
             }
         }
@@ -62,7 +62,6 @@ namespace Lab3.Models.Students
             _exams = exams;
             _tests = test;
         }
-
         public Student()
         {
             _education = Education.Bachelor;
@@ -74,33 +73,31 @@ namespace Lab3.Models.Students
         public void AddExams(params Exam[] exams) => _exams.AddRange(exams);
         public void AddTests(params Test[] tests) => _tests.AddRange(tests);
 
-        public override string ToString() => 
-            base.ToString() + "\n" +
-            $"Education: {Education}\n" +
-            $"Group: {Group}\n" +
-            $"AverageMark: {AverageMark}\n" +
-            $"Exams: {(_exams.Count > 0 ? "\n" + _exams.ToStringTabulated() : "[ ]")}\n" +
-            $"Tests: {(_tests.Count > 0 ? "\n" + _tests.ToStringTabulated() : "[ ]")}";
-
+        public override string ToString() =>
+            $"{base.ToString()}\n" +
+            $"{Education.ToStr(nameof(Education))}\n" +
+            $"{Group.ToStr(nameof(Group))}\n" +
+            $"{AverageMark.ToStr(nameof(AverageMark))}\n" +
+            $"{Exams.ToStr(nameof(Exams))}\n" +
+            $"{Tests.ToStr(nameof(Tests))}";
+        
         public override string ToShortString() => 
-            base.ToString() + "\n" +
-            $"Education: {Education}\n" +
-            $"Group: {Group}\n" +
-            $"AverageMark: {AverageMark}\n" +
-            $"Exams: {Exams.Count}\n" +
-            $"Tests: {Tests.Count}\n";
+            $"{base.ToString()}\n" +
+            $"{Education.ToStr(nameof(Education))}\n" +
+            $"{Group.ToStr(nameof(Group))}\n" +
+            $"{AverageMark.ToStr(nameof(AverageMark))}\n" +
+            $"{Exams.Count.ToStr(nameof(Exams))}\n" +
+            $"{Tests.Count.ToStr(nameof(Tests))}";
 
         public new Student DeepCopy() =>
-            new Student(this,
+            new(this,
                 Education,
                 Group,
                 _exams.Select(it => (Exam)it.DeepCopy()).ToList(),
-                _tests.Select(it => (Test)it.DeepCopy()).ToList()
-                );
+                _tests.Select(it => (Test)it.DeepCopy()).ToList());
 
         public override bool Equals(object? obj)
         {
-            if (obj is null) return false;
             if (obj is not Student other) return false;
             return base.Equals(obj) &&
                 Education == other.Education &&
@@ -113,8 +110,7 @@ namespace Lab3.Models.Students
                 Education,
                 Group,
                 Exams.CombinedHash(),
-                Tests.CombinedHash()
-                );
+                Tests.CombinedHash());
 
         public IEnumerable<object> ExamsAndTests() =>
             Exams.Concat<object>(Tests);

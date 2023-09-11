@@ -4,7 +4,7 @@ namespace Foundation
 {
     public class SharedMocker
     {
-        public string MockString(string prefix) => prefix + Guid.NewGuid().ToString();
+        public string MockString(string prefix) => prefix + Guid.NewGuid();
         public int MockInt() => Random.Shared.Next();
         public int MockInt(int maxValue) => Random.Shared.Next(maxValue);
         public int MockInt(int minValue, int maxValue) => Random.Shared.Next(minValue, maxValue);
@@ -33,7 +33,7 @@ namespace Foundation
 
         public ArrayList MockArrayListWith(Func<object> generator, int size)
         {
-            ArrayList generated = new ArrayList(size);
+            ArrayList generated = new (size);
             for (int i = 0; i < size; i++)
             {
                 generated.Add(generator());
@@ -46,7 +46,7 @@ namespace Foundation
 
         public List<T> MockListWith<T>(Func<T> generator, int size)
         {
-            List<T> generated = new List<T>(size);
+            List<T> generated = new(size);
             for (int i = 0; i < size; i++)
             {
                 generated.Add(generator());

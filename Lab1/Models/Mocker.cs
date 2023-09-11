@@ -5,27 +5,13 @@ namespace Lab1.Models
     internal class Mocker: SharedMocker
     {
         public Person MockPerson() => 
-            new Person(
-                MockString("[mock name] "),
-                MockString("[mock surname] "),
-                MockDateTime());
+            new(MockString("[mock name] "), MockString("[mock surname] "), MockDateTime());
 
         public Exam MockExam() =>
-            new Exam(
-                MockString("[mock subject] "),
-                MockInt(),
-                MockDateTime());
+            new(MockString("[mock subject] "), MockInt(), MockDateTime());
 
         public Education MockEducation() =>
             MockEnum<Education>();
-
-        public Student MockStudent() =>
-            new Student(
-                MockPerson(),
-                MockEducation(),
-                MockInt(),
-                MockArrayWith(() => MockExam()));
-
 
         public Exam[] MockExamsOneDimensional(int count)
         {
@@ -60,7 +46,7 @@ namespace Lab1.Models
 
             int k = 0;
             int previous = 0; 
-            foreach (var divider in dividers)
+            foreach (int divider in dividers)
             {
                 twoDimensionGeneralized[k] = new Exam[divider - previous];
                 previous = divider;

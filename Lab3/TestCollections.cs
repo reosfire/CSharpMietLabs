@@ -5,23 +5,24 @@ namespace Lab3
 {
     delegate KeyValuePair<TKey, TValue> GenerateElement<TKey, TValue>(int j);
 
-    internal class TestCollection<TKey, TValue>
+    internal class TestCollection<TKey, TValue> 
+        where TKey : notnull
     {
         private readonly BenchmarkRunner _runner = new();
 
-        private List<TKey> _keysList = new();
-        private List<string> _stringsList = new();
+        private readonly List<TKey> _keysList = new();
+        private readonly List<string> _stringsList = new();
 
-        private Dictionary<TKey, TValue> _keyedDictionary = new();
-        private Dictionary<string, TValue> _stringDictionary = new();
+        private readonly Dictionary<TKey, TValue> _keyedDictionary = new();
+        private readonly Dictionary<string, TValue> _stringDictionary = new();
 
-        private (TKey, string)[] _searchedElements;
+        private readonly (TKey, string)[] _searchedElements;
 
-        public TestCollection(int count, GenerateElement<TKey, TValue> generatror)
+        public TestCollection(int count, GenerateElement<TKey, TValue> generator)
         {
             for (int i = 0; i < count; i++)
             {
-                var generated = generatror(i);
+                var generated = generator(i);
 
                 _keysList.Add(generated.Key);
                 _stringsList.Add(generated.Key!.ToString()!);
@@ -32,10 +33,10 @@ namespace Lab3
 
             _searchedElements = new (TKey, string)[]
             {
-                (generatror(0).Key, "first element"),
-                (generatror(count / 2).Key, "center element"),
-                (generatror(count - 1).Key, "last element"),
-                (generatror(count).Key, "unexisted element")
+                (generator(0).Key, "first element"),
+                (generator(count / 2).Key, "center element"),
+                (generator(count - 1).Key, "last element"),
+                (generator(count).Key, "non-existed element")
             };
         }
 
@@ -82,10 +83,10 @@ namespace Lab3
                 try
                 {
                     _keyedDictionary.ContainsValue(_keyedDictionary[key]);
-                } 
-                catch 
+                }
+                catch
                 {
-
+                    // ignored
                 }
             }), "value in dict with keys"),
         };

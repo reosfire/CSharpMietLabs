@@ -6,14 +6,14 @@ namespace Lab3
 {
     internal class Program: LabBase<Mocker>
     {
-        static void Main() => new Program().Run();
+        private static void Main() => new Program().Run();
 
         private void Run()
         {
             RunCommented("1. Sorting", () =>
             {
-                Student student = mocker.MockStudent();
-                student.AddExams(mocker.MockArrayWith(mocker.MockExam));
+                Student student = Mocker.MockStudent();
+                student.AddExams(Mocker.MockArrayWith(Mocker.MockExam));
 
                 Console.WriteLine("Initial: \n{0}", student.Exams.ToStringTabulated());
 
@@ -27,11 +27,11 @@ namespace Lab3
                 Console.WriteLine("Sorted By Date: \n{0}", student.Exams.ToStringTabulated());
             });
 
-            StudentCollection<string> studentCollection = new StudentCollection<string>(it => it.Name + it.Surname);
+            StudentCollection<string> studentCollection = new(it => it.Name + it.Surname);
 
             RunCommented("2. StudentsCollection add", () =>
             {
-                studentCollection.AddDefaults(4, mocker.MockStudent);
+                studentCollection.AddDefaults(4, Mocker.MockStudent);
 
                 Console.WriteLine(studentCollection);
             });
@@ -60,14 +60,13 @@ namespace Lab3
                     Console.WriteLine("Please enter number greater than zero!!");
                 }
 
-                KeyValuePair<Person, Student> generator(int i)
+                KeyValuePair<Person, Student> Generator(int i)
                 {
-                    Person person = new Person($"name: {i}", $"surname: {i}", DateTime.MinValue);
-                    return new KeyValuePair<Person, Student>(person, mocker.MockStudent());
+                    Person person = new($"name: {i}", $"surname: {i}", DateTime.MinValue);
+                    return new KeyValuePair<Person, Student>(person, Mocker.MockStudent());
                 }
-
                 
-                TestCollection<Person, Student> testCollection = new TestCollection<Person, Student>(count, generator);
+                TestCollection<Person, Student> testCollection = new(count, Generator);
 
                 testCollection.RunAllTests();
             });

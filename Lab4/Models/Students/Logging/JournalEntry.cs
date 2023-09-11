@@ -1,14 +1,14 @@
-﻿using Lab4.Models.Students.Collection;
+﻿using Foundation;
 using Action = Lab4.Models.Students.Collection.Action;
 
 namespace Lab4.Models.Students.Logging
 {
     internal class JournalEntry
     {
-        public string CollectionName { get; set; }
-        public Action Action { get; set; }
-        public string ChangedProperty { get; set; }
-        public string ChangedKey { get; set; }
+        public string CollectionName { get; }
+        public Action Action { get; }
+        public string ChangedProperty { get; }
+        public string ChangedKey { get; }
 
         public JournalEntry(string collectionName, Action action, string changedProperty, string changedKey)
         {
@@ -19,9 +19,9 @@ namespace Lab4.Models.Students.Logging
         }
 
         public override string ToString() =>
-            $"CollectionName: {CollectionName}\n" +
-            $"Action: {Action}\n" +
-            $"ChangedProperty: {ChangedProperty}\n" +
-            $"ChangedKey: {ChangedKey}";
+            $"{CollectionName.ToStr(nameof(CollectionName))}\n" +
+            $"{Action.ToStr(nameof(Action))}\n" +
+            $"{ChangedProperty.ToStr(nameof(ChangedProperty))}\n" +
+            $"{ChangedKey.ToStr(nameof(ChangedKey))}";
     }
 }

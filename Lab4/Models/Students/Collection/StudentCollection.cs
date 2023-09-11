@@ -1,17 +1,17 @@
 ﻿using Foundation;
-using Lab4.Models.Students;
 using System.ComponentModel;
 
 namespace Lab4.Models.Students.Collection
 {
-    delegate TKey KeySelector<TKey>(Student student);
-    delegate void StudentsChangedHandler<TKey>(StudentCollection<TKey> source, StudentsChangedEventArgs<TKey> args)
+    internal delegate TKey KeySelector<out TKey>(Student student);
+
+    internal delegate void StudentsChangedHandler<TKey>(StudentCollection<TKey> source, StudentsChangedEventArgs<TKey> args)
         where TKey : notnull;
 
     internal class StudentCollection<TKey> where TKey : notnull
     {
-        private Dictionary<TKey, Student> _data = new Dictionary<TKey, Student>();
-        private KeySelector<TKey> _keySelector;
+        private Dictionary<TKey, Student> _data = new();
+        private readonly KeySelector<TKey> _keySelector;
 
         public double MaxAverageMark
         {
@@ -24,7 +24,7 @@ namespace Lab4.Models.Students.Collection
 
         public string Name { get; set; }
         public event StudentsChangedHandler<TKey>? StudentsChanged;
-        private Dictionary<TKey, PropertyChangedEventHandler> _propertyChangedHandlers = new();
+        private readonly Dictionary<TKey, PropertyChangedEventHandler> _propertyChangedHandlers = new();
 
         public IEnumerable<IGrouping<Education, KeyValuePair<TKey, Student>>> GroupByEducation =>
             _data.GroupBy(it => it.Value.Education);
@@ -41,17 +41,18 @@ namespace Lab4.Models.Students.Collection
             _data.Add(key, student);
             StudentsChanged?.Invoke(this, new StudentsChangedEventArgs<TKey>(Action.Add, nameof(_data), key));
 
-            PropertyChangedEventHandler propertyChangedHandler = (sender, args) =>
+            void PropertyChangedHandler(object? sender, PropertyChangedEventArgs args)
             {
                 StudentsChanged?.Invoke(this, new StudentsChangedEventArgs<TKey>(Action.Property, args.PropertyName!, key));
-            };
-            _propertyChangedHandlers[key] = propertyChangedHandler;
-            student.PropertyChanged += propertyChangedHandler;
+            }
+
+            _propertyChangedHandlers[key] = PropertyChangedHandler;
+            student.PropertyChanged += PropertyChangedHandler;
         }
 
         public void AddStudents(params Student[] students)
         {
-            foreach (var student in students)
+            foreach (Student student in students)
                 Add(student);
         }
 
@@ -87,7 +88,7 @@ namespace Lab4.Models.Students.Collection
         public IEnumerable<KeyValuePair<TKey, Student>> EducationForm(Education value) =>
             _data.Where(it => it.Value.Education == value);
 
-        public override string ToString() => $"Students: " +
-            $"{(_data.Count > 0 ? "\n" + _data.ToStringTabulated() : "{ }")}";
+        public override string ToString() =>
+            $"{_data.ToStr("Students")}";
     }
 }

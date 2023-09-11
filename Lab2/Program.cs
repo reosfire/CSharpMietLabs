@@ -6,14 +6,14 @@ namespace Lab2
 {
     internal class Program: LabBase<Mocker>
     {
-        static void Main() => new Program().Run();
+        private static void Main() => new Program().Run();
 
         private void Run()
         {
             RunCommented("1. Equality and hashes", () =>
             {
-                Student student1 = new Student();
-                Student student2 = new Student();
+                Student student1 = new();
+                Student student2 = new();
 
                 Console.WriteLine("Reference equals: {0}", ReferenceEquals(student1, student2));
                 Console.WriteLine("Equals: {0}", student1 == student2);
@@ -21,12 +21,12 @@ namespace Lab2
                 Console.WriteLine("Second hash: {0}", student2.GetHashCode());
             });
 
-            Student sharedStudent = mocker.MockStudent();
+            Student sharedStudent = Mocker.MockStudent();
 
             RunCommented("2. Fill student with exams and tests", () =>
             {
-                sharedStudent.AddExams(mocker.MockArrayWith(() => mocker.MockExam(), 2, 3));
-                sharedStudent.AddTests(mocker.MockArrayWith(() => mocker.MockTest(), 2, 3));
+                sharedStudent.AddExams(Mocker.MockArrayWith(() => Mocker.MockExam(), 2, 3));
+                sharedStudent.AddTests(Mocker.MockArrayWith(() => Mocker.MockTest(), 2, 3));
 
                 Console.WriteLine(sharedStudent);
             });
@@ -38,7 +38,7 @@ namespace Lab2
 
             RunCommented("4. Deep copy test", () =>
             {
-                Student student1 = mocker.MockStudent();
+                Student student1 = Mocker.MockStudent();
                 Student student2 = student1.DeepCopy();
 
                 Console.WriteLine("Student 1:");
@@ -81,7 +81,7 @@ namespace Lab2
 
             RunCommented("6. All iterator", () =>
             {
-                Student student = mocker.MockStudent();
+                Student student = Mocker.MockStudent();
                 Console.WriteLine(student);
 
                 Console.WriteLine();
@@ -90,14 +90,14 @@ namespace Lab2
 
             RunCommented("7. Exams iterator", () =>
             {
-                Student student = mocker.MockStudent();
+                Student student = Mocker.MockStudent();
 
                 for (int i = 0; i < 10; i++)
                 {
                     student.AddExams(new Exam(
-                        mocker.MockString("[mock subject] "),
-                        mocker.MockInt(6),
-                        mocker.MockDateTime()
+                        Mocker.MockString("[mock subject] "),
+                        Mocker.MockInt(6),
+                        Mocker.MockDateTime()
                         ));
                 }
 
@@ -109,7 +109,7 @@ namespace Lab2
 
 
 
-            sharedStudent = mocker.MockStudent();
+            sharedStudent = Mocker.MockStudent();
             sharedStudent.AddExams(
                 new Exam("Subject 1", 3, DateTime.Now),
                 new Exam("Subject 2", 2, DateTime.Now),
@@ -132,7 +132,7 @@ namespace Lab2
 
             RunCommented("9. Passed exams and tests", () =>
             {
-                foreach (var item in sharedStudent.PassedExamsAndTests())
+                foreach (object item in sharedStudent.PassedExamsAndTests())
                 {
                     Console.WriteLine(item);
                     Console.WriteLine();
@@ -141,7 +141,7 @@ namespace Lab2
 
             RunCommented("10. Subjects with passed test and exam", () =>
             {
-                foreach (var item in sharedStudent.PassedTestsWithPassedExams())
+                foreach (Test item in sharedStudent.PassedTestsWithPassedExams())
                 {
                     Console.WriteLine(item);
                     Console.WriteLine();

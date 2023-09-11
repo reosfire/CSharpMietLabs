@@ -4,19 +4,19 @@ namespace Foundation
 {
     public class BenchmarkRunner
     {
-        private readonly Stopwatch _stopwatch = new Stopwatch();
+        private readonly Stopwatch _stopwatch = new();
 
         public TimeSpan Run(Action action, int tries = 20)
         {
-            long totalTiks = 0;
+            long totalTicks = 0;
             for (int i = 0; i < tries; i++)
             {
-                totalTiks += SimpleRun(action).Ticks;
+                totalTicks += SimpleRun(action).Ticks;
             }
-            return new TimeSpan(totalTiks / tries);
+            return new TimeSpan(totalTicks / tries);
         }
 
-        public TimeSpan SimpleRun(Action action)
+        private TimeSpan SimpleRun(Action action)
         {
             _stopwatch.Restart();
             action();

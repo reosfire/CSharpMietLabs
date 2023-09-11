@@ -1,28 +1,23 @@
 ﻿using Foundation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lab4.Models.Students.Collection
 {
     internal class StudentsChangedEventArgs<TKey> : EventArgs
     {
-        public Action Action { get; set; }
-        public string ChangedPropertyName { get; set; }
-        public TKey Key { get; set; }
+        public Action Action { get; init; }
+        public string ChangedProperty { get; init; }
+        public TKey Key { get; init; }
 
-        public StudentsChangedEventArgs(Action action, string changedPropertyName, TKey key)
+        public StudentsChangedEventArgs(Action action, string changedProperty, TKey key)
         {
             Action = action;
-            ChangedPropertyName = changedPropertyName;
+            ChangedProperty = changedProperty;
             Key = key;
         }
 
         public override string ToString() =>
-            $"Action: {Action}\n" +
-            $"ChangedProperty: {ChangedPropertyName}\n" +
-            $"Key: \n{Key?.ToString()?.Tabulate() ?? "null"}";
+            $"{Action.ToStr(nameof(Action))}\n" +
+            $"{ChangedProperty.ToStr(nameof(ChangedProperty))}\n" +
+            $"{Key.ToStr(nameof(Key))}";
     }
 }

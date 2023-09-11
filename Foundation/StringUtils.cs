@@ -69,7 +69,7 @@ namespace Foundation
             return $"{label}:\n{valueString}";
         }
 
-        public static string ToStr(this object value, string label) =>
+        public static string ToStr(this object? value, string label) =>
             $"{label}: \n{value?.ToString()?.Tabulate() ?? "null"}";
     }
 }

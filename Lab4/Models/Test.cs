@@ -1,4 +1,6 @@
-﻿namespace Lab4.Models
+﻿using Foundation;
+
+namespace Lab4.Models
 {
     internal class Test
     {
@@ -10,14 +12,15 @@
             Subject = subject;
             Passed = passed;
         }
-
         public Test()
         {
             Subject = "";
             Passed = false;
         }
 
-        public override string ToString() => $"Subject: {Subject}\nPassed: {Passed}";
+        public override string ToString() =>
+            $"{Subject.ToStr(nameof(Subject))}\n" +
+            $"{Passed.ToStr(nameof(Passed))}";
 
         public object DeepCopy() => new Test(Subject, Passed);
     }

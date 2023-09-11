@@ -5,11 +5,11 @@ namespace Lab1
 {
     internal class Program: LabBase<Mocker>
     {
-        static void Main() => new Program().Run();
+        private static void Main() => new Program().Run();
 
         private void Run()
         {
-            Student student = new Student();
+            Student student = new();
 
             RunCommented("1. Print default student", () =>
             {
@@ -18,7 +18,7 @@ namespace Lab1
 
             RunCommented("2. Indexer values", () =>
             {
-                foreach (var education in Enum.GetValues<Education>())
+                foreach (Education education in Enum.GetValues<Education>())
                 {
                     Console.WriteLine($"{education,-16}| {student[education]}");
                 }
@@ -26,17 +26,17 @@ namespace Lab1
 
             RunCommented("3. Fill student", () =>
             {
-                student.PersonalData = mocker.MockPerson();
-                student.Education = mocker.MockEducation();
-                student.Group = mocker.MockInt();
-                student.PassedExams = mocker.MockArrayWith(() => mocker.MockExam(), 2, 3);
+                student.PersonalData = Mocker.MockPerson();
+                student.Education = Mocker.MockEducation();
+                student.Group = Mocker.MockInt();
+                student.PassedExams = Mocker.MockArrayWith(() => Mocker.MockExam(), 2, 3);
 
                 Console.WriteLine(student);
             });
 
             RunCommented("4. AddExams", () =>
             {
-                Exam[] examsToAdd = mocker.MockArrayWith(() => mocker.MockExam(), 2, 3);
+                Exam[] examsToAdd = Mocker.MockArrayWith(() => Mocker.MockExam(), 2, 3);
 
                 Console.WriteLine(examsToAdd.ToStr("ExamsToAdd"));
                 Console.WriteLine();
@@ -50,40 +50,42 @@ namespace Lab1
             {
                 string DoSomeWorkWithExam(Exam exam) => exam.ToString();
 
-                int size = 100000;
+                Console.Write("Введите длину массивов например 1000000: ");
+                int size = int.Parse(Console.ReadLine()!);
+                
+                Console.WriteLine("Введите размеры прямоугольного массива в формате {nRows};{mColumns} например 800;1250");
+                int[] sizes = Console.ReadLine()!.Split(';').Select(int.Parse).ToArray();
 
-                Exam[] oneDimension = mocker.MockExamsOneDimensional(size);
-                Exam[,] rectangular = mocker.MockExamsRectangular(160 * 5, 625 * 2);
-                Exam[][] twoDimensionGeneralized = mocker.MockExamsTwoDimensionalGeneralized(size, (int)Math.Round(Math.Sqrt(size)));
+                Console.WriteLine("Generation started");
+                Exam[] oneDimension = Mocker.MockExamsOneDimensional(size);
+                Exam[,] rectangular = Mocker.MockExamsRectangular(sizes[0], sizes[1]);
+                Exam[][] twoDimensionGeneralized = Mocker.MockExamsTwoDimensionalGeneralized(size, (int)Math.Round(Math.Sqrt(size)));
                 Console.WriteLine("Generation completed");
 
-                BenchmarkRunner benchmarkRunner = new BenchmarkRunner();
+                BenchmarkRunner benchmarkRunner = new();
                 Console.WriteLine("One dimension: {0}", benchmarkRunner.Run(() =>
                 {
-                    for (int i = 0; i < oneDimension.Length; i++)
+                    foreach (Exam exam in oneDimension)
                     {
-                        DoSomeWorkWithExam(oneDimension[i]);
+                        DoSomeWorkWithExam(exam);
                     }
                 }));
 
                 Console.WriteLine("Rectangular: {0}", benchmarkRunner.Run(() =>
                 {
-                    for (int i = 0; i < 160; i++)
+                    foreach (Exam exam in rectangular)
                     {
-                        for (int j = 0; j < 625; j++)
-                        {
-                            DoSomeWorkWithExam(rectangular[i, j]);
-                        }
+                        DoSomeWorkWithExam(exam);
                     }
                 }));
 
                 Console.WriteLine("Two dimension generalized: {0}", benchmarkRunner.Run(() =>
                 {
-                    for (int i = 0; i < twoDimensionGeneralized.Length; i++)
+                    foreach (Exam[] line in twoDimensionGeneralized)
                     {
-                        for (int j = 0; j < twoDimensionGeneralized[i].Length; j++)
+                        foreach (Exam exam in line)
                         {
-                            DoSomeWorkWithExam(twoDimensionGeneralized[i][j]);
+                            DoSomeWorkWithExam(exam);
                         }
                     }
                 }));
