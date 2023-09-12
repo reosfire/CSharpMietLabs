@@ -2,6 +2,7 @@
 
 namespace Lab5.Models
 {
+    [Serializable]
     internal class Test
     {
         public string Subject { get; set; }

@@ -2,6 +2,7 @@
 
 namespace Lab5.Models
 {
+    [Serializable]
     internal class Person: IDateAndCopy
     {
         protected string _name;

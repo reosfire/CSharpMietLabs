@@ -2,6 +2,7 @@
 
 namespace Lab5.Models
 {
+    [Serializable]
     internal class Exam: IDateAndCopy, IComparable<Exam>, IComparer<Exam>
     {
         public string Subject { get; set; }

@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.ComponentModel;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using Foundation;
 
 namespace Lab5.Models.Students
 {
+    [Serializable]
     internal class Student : Person, IEnumerable<string>, INotifyPropertyChanged
     {
         private Education _education;
@@ -76,7 +79,7 @@ namespace Lab5.Models.Students
         public Student()
         {
             _education = Education.Bachelor;
-            _group = 0;
+            _group = 101;
             _exams = new List<Exam>();
             _tests = new List<Test>();
         }
@@ -100,12 +103,90 @@ namespace Lab5.Models.Students
             $"{Exams.Count.ToStr(nameof(Exams))}\n" +
             $"{Tests.Count.ToStr(nameof(Tests))}";
 
-        public new Student DeepCopy() =>
-            new Student(this,
-                Education,
-                Group,
-                _exams.Select(it => (Exam)it.DeepCopy()).ToList(),
-                _tests.Select(it => (Test)it.DeepCopy()).ToList());
+        public new Student DeepCopy()
+        {
+            IFormatter formatter = new BinaryFormatter();
+            
+            using MemoryStream memory = new();
+            formatter.Serialize(memory, this);
+            
+            memory.Seek(0, SeekOrigin.Begin);
+            return (Student)formatter.Deserialize(memory);
+        }
+
+        public bool Save(string fileName)
+        {
+            IFormatter formatter = new BinaryFormatter();
+
+            FileStream? fileStream = null;
+            try
+            {
+                fileStream = File.OpenWrite(fileName);
+                formatter.Serialize(fileStream, this);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            finally
+            {
+                fileStream?.Dispose();
+            }
+        }
+
+        public bool Load(string fileName)
+        {
+            IFormatter formatter = new BinaryFormatter();
+            
+            FileStream? fileStream = null;
+            try
+            {
+                fileStream = File.OpenRead(fileName);
+                Student deserialized = (Student)formatter.Deserialize(fileStream);
+                
+                _name = deserialized._name;
+                _surname = deserialized._surname;
+                _birthday = deserialized._birthday;
+                _education = deserialized._education;
+                _group = deserialized._group;
+                _exams = deserialized._exams;
+                _tests = deserialized._tests;
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            finally
+            {
+                fileStream?.Dispose();
+            }
+        }
+
+        public bool AddFromConsole()
+        {
+            Console.WriteLine("Enter exam data in following format: {subject};{mark};{date}");
+            Console.WriteLine("Example: Calculus;5;20.06.2023");
+            try
+            {
+                string input = Console.ReadLine()!;
+                string[] tokens = input.Split(';');
+                if (tokens.Length != 3) throw new Exception("There are must be 3 tokens");
+
+                string subject = tokens[0];
+                int mark = int.Parse(tokens[1]);
+                DateTime date = DateTime.Parse(tokens[2]);
+                
+                AddExams(new Exam(subject, mark, date));
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
 
         public override bool Equals(object? obj)
         {

@@ -7,26 +7,6 @@ namespace Foundation
         public static string Tabulate(this string s, int times = 1) => 
             string.Join('\n', s.Split('\n').Select(it => new string(' ', times * 3) + it));
 
-        public static string Detabulate(this string s)
-        {
-            string[] lines = s.Split('\n');
-
-            StringBuilder resultBuilder = new();
-
-            foreach (string line in lines)
-            {
-                resultBuilder.Append(line.AssertStartsWithTab()[3..]);
-            }
-            return resultBuilder.ToString();
-        }
-
-        private static string AssertStartsWithTab(this string s)
-        {
-            if (s.Length < 3) throw new ArgumentException("Line should be at least 3 characters long");
-            if (s[0..2].Any(it => it != ' ')) throw new ArgumentException("Line should starts with 3 spaces");
-            return s;
-        }
-
         public static string ToStringTabulated<T>(this IEnumerable<T> collection) where T : notnull =>
             string.Join("\n\n", collection.Select(it => "   -" + it.ToString()?.Tabulate(2)[4..]));
 
